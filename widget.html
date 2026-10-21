@@ -25,13 +25,13 @@ body{background:radial-gradient(120% 70% at 100% 0%,#2a1e5c 0%,transparent 60%),
 </style></head><body><div id="app"><div class="card"><div class="hd"><span class="dot" id="dot"></span>קרב התיקים<span class="live" id="lv">LIVE</span></div><div id="rows"></div><div class="ft">דמה · עודכן <span id="ts">—</span> (שעון ישראל)</div></div></div>
 <script>
 const P=[{"name": "עדין", "start": 1000.0, "cash": 695.816, "h": {"BTC": 0.00182929, "ZEC": 0.11795586}}, {"name": "בינוני", "start": 1000.0, "cash": 497.6701, "h": {"BTC": 0.00305102, "ZEC": 0.19736332}}, {"name": "אגרסיבי", "start": 1000.0, "cash": 661.2594, "h": {"BTC": 0.00392804}}];
-const PX0={"BTC": 83588.0, "ZEC": 1287.77};
+const PX0={"BTC": 83819.33, "ZEC": 1313.37};
 const MED=["🥇","🥈","🥉"];
 function render(px){const R=P.map(p=>{let v=p.cash;for(const[c,q]of Object.entries(p.h))v+=q*px[c];return {name:p.name,v,pct:(v/p.start-1)*100}}).sort((a,b)=>b.v-a.v);
 const mx=Math.max(5,...R.map(r=>Math.abs(r.pct)));
 document.getElementById('rows').innerHTML=R.map((r,i)=>{const c=r.pct>=0?'up':'down',w=Math.min(50,Math.abs(r.pct)/mx*50),col=r.pct>=0?'#34d399':'#f87171',pos=r.pct>=0?`left:50%;width:${w}%`:`left:${50-w}%;width:${w}%`;
 return `<div class="r"><div class="top"><span class="m">${MED[i]||i+1}</span><span class="n">${r.name}</span><span class="v">${r.v.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}</span><span class="pl ${c}">${r.pct>=0?'+':''}${r.pct.toFixed(2)}%</span></div><div class="bar"><b></b><i style="${pos};background:${col}"></i></div></div>`}).join('')}
 function ts(x,ok){document.getElementById('ts').textContent=x;document.getElementById('dot').className=ok?'dot':'dot off';document.getElementById('lv').textContent=ok?'LIVE':'מחירי בנייה'}
-async function tick(){const s=Object.keys(PX0).map(x=>x+"USDT");try{const r=await fetch("https://data-api.binance.vision/api/v3/ticker/price?symbols="+encodeURIComponent(JSON.stringify(s)));if(!r.ok)throw 0;const px={};(await r.json()).forEach(o=>px[o.symbol.slice(0,-4)]=+o.price);render(px);ts(new Date().toLocaleTimeString('he-IL',{timeZone:'Asia/Jerusalem',hour:'2-digit',minute:'2-digit',second:'2-digit'}),1)}catch(e){ts("21.10.2026 15:11",0)}}
-render(PX0);ts("21.10.2026 15:11",0);tick();setInterval(tick,30000);
+async function tick(){const s=Object.keys(PX0).map(x=>x+"USDT");try{const r=await fetch("https://data-api.binance.vision/api/v3/ticker/price?symbols="+encodeURIComponent(JSON.stringify(s)));if(!r.ok)throw 0;const px={};(await r.json()).forEach(o=>px[o.symbol.slice(0,-4)]=+o.price);render(px);ts(new Date().toLocaleTimeString('he-IL',{timeZone:'Asia/Jerusalem',hour:'2-digit',minute:'2-digit',second:'2-digit'}),1)}catch(e){ts("21.10.2026 16:14",0)}}
+render(PX0);ts("21.10.2026 16:14",0);tick();setInterval(tick,30000);
 </script></body></html>
