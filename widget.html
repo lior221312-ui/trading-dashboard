@@ -2,9 +2,9 @@
 <style>html,body{margin:0;background:#0f1115;color:#e6e6e6;font-family:system-ui,Arial}#w{max-width:300px;padding:8px 10px;box-sizing:border-box}.r{display:flex;justify-content:space-between;align-items:baseline;padding:9px 2px;border-bottom:1px solid #232733;font-size:17px}.n{font-weight:600}.v{font-weight:700}.p{font-size:14px;margin-inline-start:6px}.up{color:#3fb950}.down{color:#f85149}.t{color:#888;font-size:11px;margin-top:6px}</style></head><body><div id="w"><div id="rows"></div><div class="t">דמה · עודכן <span id="ts">—</span> (שעון ישראל)</div></div>
 <script>
 const P=[{"name": "עדין", "start": 1000.0, "cash": 695.816, "h": {"BTC": 0.00182929, "ZEC": 0.11795586}}, {"name": "בינוני", "start": 1000.0, "cash": 497.6701, "h": {"BTC": 0.00305102, "ZEC": 0.19736332}}, {"name": "אגרסיבי", "start": 1000.0, "cash": 661.2594, "h": {"BTC": 0.00392804}}];
-const PX0={"BTC": 83040.01, "ZEC": 1267.2};
+const PX0={"BTC": 82960.15, "ZEC": 1269.53};
 function render(px){document.getElementById('rows').innerHTML=P.map(p=>{let v=p.cash;for(const[c,q]of Object.entries(p.h))v+=q*px[c];const pct=(v/p.start-1)*100,c=pct>=0?'up':'down';return `<div class="r"><span class="n">${p.name}</span><span><span class="v">${v.toFixed(2)}</span><span class="p ${c}">${pct>=0?'+':''}${pct.toFixed(2)}%</span></span></div>`}).join('')}
 function ts(x){document.getElementById('ts').textContent=x}
-async function tick(){const s=Object.keys(PX0).map(x=>x+"USDT");try{const r=await fetch("https://data-api.binance.vision/api/v3/ticker/price?symbols="+encodeURIComponent(JSON.stringify(s)));if(!r.ok)throw 0;const px={};(await r.json()).forEach(o=>px[o.symbol.slice(0,-4)]=+o.price);render(px);ts(new Date().toLocaleTimeString('he-IL',{timeZone:'Asia/Jerusalem',hour:'2-digit',minute:'2-digit',second:'2-digit'}))}catch(e){ts("21.10.2026 04:57 (מחירי בנייה)")}}
-render(PX0);ts("21.10.2026 04:57 (מחירי בנייה)");tick();setInterval(tick,30000);
+async function tick(){const s=Object.keys(PX0).map(x=>x+"USDT");try{const r=await fetch("https://data-api.binance.vision/api/v3/ticker/price?symbols="+encodeURIComponent(JSON.stringify(s)));if(!r.ok)throw 0;const px={};(await r.json()).forEach(o=>px[o.symbol.slice(0,-4)]=+o.price);render(px);ts(new Date().toLocaleTimeString('he-IL',{timeZone:'Asia/Jerusalem',hour:'2-digit',minute:'2-digit',second:'2-digit'}))}catch(e){ts("21.10.2026 05:06 (מחירי בנייה)")}}
+render(PX0);ts("21.10.2026 05:06 (מחירי בנייה)");tick();setInterval(tick,30000);
 </script></body></html>
