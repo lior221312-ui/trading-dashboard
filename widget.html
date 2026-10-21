@@ -1,10 +1,37 @@
-<!doctype html><html lang="he" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>תיקים - ווידג׳ט</title><meta name="theme-color" content="#0f1115">
-<style>html,body{margin:0;background:#0f1115;color:#e6e6e6;font-family:system-ui,Arial}#w{max-width:300px;padding:8px 10px;box-sizing:border-box}.r{display:flex;justify-content:space-between;align-items:baseline;padding:9px 2px;border-bottom:1px solid #232733;font-size:17px}.n{font-weight:600}.v{font-weight:700}.p{font-size:14px;margin-inline-start:6px}.up{color:#3fb950}.down{color:#f85149}.t{color:#888;font-size:11px;margin-top:6px}</style></head><body><div id="w"><div id="rows"></div><div class="t">דמה · עודכן <span id="ts">—</span> (שעון ישראל)</div></div>
+<!doctype html><html lang="he" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>קרב התיקים</title><meta name="theme-color" content="#0b0d14">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}html,body{margin:0;height:100%;background:#0b0d14;color:#eef1f7;font-family:Heebo,system-ui,Arial,sans-serif}
+body{background:radial-gradient(120% 70% at 100% 0%,#2a1e5c 0%,transparent 60%),radial-gradient(100% 60% at 0% 100%,#0e3b4a 0%,transparent 60%),#0b0d14}
+#app{height:100vh;padding:48px 10px 10px;display:flex}
+.card{flex:1;display:flex;flex-direction:column;position:relative;border-radius:20px;padding:14px 14px 10px;background:rgba(22,26,40,.55);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);box-shadow:0 10px 30px rgba(0,0,0,.45)}
+.card:before{content:"";position:absolute;inset:0;border-radius:20px;padding:1px;background:linear-gradient(135deg,rgba(140,120,255,.7),rgba(255,255,255,.08) 45%,rgba(60,200,220,.6));-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}
+.hd{display:flex;align-items:center;gap:8px;font-weight:800;font-size:clamp(15px,4.5vw,20px);letter-spacing:.3px}
+.dot{width:9px;height:9px;border-radius:50%;background:#34d399;box-shadow:0 0 0 0 rgba(52,211,153,.7);animation:p 1.8s infinite}
+.dot.off{background:#f59e0b;animation:none}
+@keyframes p{0%{box-shadow:0 0 0 0 rgba(52,211,153,.7)}70%{box-shadow:0 0 0 9px rgba(52,211,153,0)}100%{box-shadow:0 0 0 0 rgba(52,211,153,0)}}
+.live{margin-inline-start:auto;font-size:11px;font-weight:600;color:#9aa3b8}
+#rows{flex:1;display:flex;flex-direction:column;justify-content:space-evenly;gap:8px;margin-top:10px}
+.r{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);border-radius:14px;padding:10px 12px}
+.top{display:flex;align-items:center;gap:10px}
+.m{font-size:clamp(20px,6vw,28px);line-height:1}
+.n{font-weight:600;font-size:clamp(14px,4.2vw,18px);color:#c9d0e0}
+.v{margin-inline-start:auto;font-weight:800;font-size:clamp(20px,6.5vw,30px);font-variant-numeric:tabular-nums;direction:ltr}
+.pl{font-size:clamp(11px,3.4vw,14px);font-weight:700;padding:3px 8px;border-radius:999px;direction:ltr;font-variant-numeric:tabular-nums}
+.up{color:#34d399;background:rgba(52,211,153,.14)}.down{color:#f87171;background:rgba(248,113,113,.14)}
+.bar{position:relative;height:5px;margin-top:8px;border-radius:3px;background:rgba(255,255,255,.08);overflow:hidden}
+.bar i{position:absolute;top:0;bottom:0;border-radius:3px}.bar b{position:absolute;top:-2px;bottom:-2px;left:50%;width:1px;background:rgba(255,255,255,.35)}
+.ft{color:#7d869c;font-size:10.5px;text-align:center;margin-top:8px}
+</style></head><body><div id="app"><div class="card"><div class="hd"><span class="dot" id="dot"></span>קרב התיקים<span class="live" id="lv">LIVE</span></div><div id="rows"></div><div class="ft">דמה · עודכן <span id="ts">—</span> (שעון ישראל)</div></div></div>
 <script>
 const P=[{"name": "עדין", "start": 1000.0, "cash": 695.816, "h": {"BTC": 0.00182929, "ZEC": 0.11795586}}, {"name": "בינוני", "start": 1000.0, "cash": 497.6701, "h": {"BTC": 0.00305102, "ZEC": 0.19736332}}, {"name": "אגרסיבי", "start": 1000.0, "cash": 661.2594, "h": {"BTC": 0.00392804}}];
-const PX0={"BTC": 82960.15, "ZEC": 1269.53};
-function render(px){document.getElementById('rows').innerHTML=P.map(p=>{let v=p.cash;for(const[c,q]of Object.entries(p.h))v+=q*px[c];const pct=(v/p.start-1)*100,c=pct>=0?'up':'down';return `<div class="r"><span class="n">${p.name}</span><span><span class="v">${v.toFixed(2)}</span><span class="p ${c}">${pct>=0?'+':''}${pct.toFixed(2)}%</span></span></div>`}).join('')}
-function ts(x){document.getElementById('ts').textContent=x}
-async function tick(){const s=Object.keys(PX0).map(x=>x+"USDT");try{const r=await fetch("https://data-api.binance.vision/api/v3/ticker/price?symbols="+encodeURIComponent(JSON.stringify(s)));if(!r.ok)throw 0;const px={};(await r.json()).forEach(o=>px[o.symbol.slice(0,-4)]=+o.price);render(px);ts(new Date().toLocaleTimeString('he-IL',{timeZone:'Asia/Jerusalem',hour:'2-digit',minute:'2-digit',second:'2-digit'}))}catch(e){ts("21.10.2026 05:06 (מחירי בנייה)")}}
-render(PX0);ts("21.10.2026 05:06 (מחירי בנייה)");tick();setInterval(tick,30000);
+const PX0={"BTC": 82858.97, "ZEC": 1267.72};
+const MED=["🥇","🥈","🥉"];
+function render(px){const R=P.map(p=>{let v=p.cash;for(const[c,q]of Object.entries(p.h))v+=q*px[c];return {name:p.name,v,pct:(v/p.start-1)*100}}).sort((a,b)=>b.v-a.v);
+const mx=Math.max(5,...R.map(r=>Math.abs(r.pct)));
+document.getElementById('rows').innerHTML=R.map((r,i)=>{const c=r.pct>=0?'up':'down',w=Math.min(50,Math.abs(r.pct)/mx*50),col=r.pct>=0?'#34d399':'#f87171',pos=r.pct>=0?`left:50%;width:${w}%`:`left:${50-w}%;width:${w}%`;
+return `<div class="r"><div class="top"><span class="m">${MED[i]||i+1}</span><span class="n">${r.name}</span><span class="v">${r.v.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}</span><span class="pl ${c}">${r.pct>=0?'+':''}${r.pct.toFixed(2)}%</span></div><div class="bar"><b></b><i style="${pos};background:${col}"></i></div></div>`}).join('')}
+function ts(x,ok){document.getElementById('ts').textContent=x;document.getElementById('dot').className=ok?'dot':'dot off';document.getElementById('lv').textContent=ok?'LIVE':'מחירי בנייה'}
+async function tick(){const s=Object.keys(PX0).map(x=>x+"USDT");try{const r=await fetch("https://data-api.binance.vision/api/v3/ticker/price?symbols="+encodeURIComponent(JSON.stringify(s)));if(!r.ok)throw 0;const px={};(await r.json()).forEach(o=>px[o.symbol.slice(0,-4)]=+o.price);render(px);ts(new Date().toLocaleTimeString('he-IL',{timeZone:'Asia/Jerusalem',hour:'2-digit',minute:'2-digit',second:'2-digit'}),1)}catch(e){ts("21.10.2026 05:20",0)}}
+render(PX0);ts("21.10.2026 05:20",0);tick();setInterval(tick,30000);
 </script></body></html>
